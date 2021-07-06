@@ -1,5 +1,6 @@
 package com.main;
 
+import exceptions.NotEnoughDepartmentsException;
 import exceptions.NotEnoughGroupsException;
 import exceptions.NotEnoughTeachersException;
 
@@ -12,9 +13,7 @@ public abstract class Faculty {
 
     private HashSet<Department> departments = new HashSet<>();
 
-    public Set<Department> getDepartments() {
-        return Set.copyOf(departments);
-    }
+    public Set<Department> getDepartments() { return Set.copyOf(departments); }
 
     public void addDepartment(Department department) throws NotEnoughGroupsException, NotEnoughTeachersException {
         if (Department.minGroupsAmount > department.groupsAmount())
@@ -29,7 +28,20 @@ public abstract class Faculty {
             addDepartment(department);
     }
 
-    public int departmentAmount(){
-        return departments.size();
+    public void removeDepartments(Department department) throws NotEnoughDepartmentsException {
+        if (departments.size() == minAmountDepartments && departments.contains(department))
+            throw new NotEnoughDepartmentsException();
+        departments.remove(department);
     }
+
+    public void removeDepartments(Collection<Department> departments) throws NotEnoughDepartmentsException {
+        HashSet<Department> backUp = (HashSet<Department>) Set.copyOf(this.departments);
+        this.departments.removeAll(departments);
+        if (this.departments.size() < minAmountDepartments) {
+            this.departments = backUp;
+            throw new NotEnoughDepartmentsException();
+        }
+    }
+
+    public int departmentAmount(){ return departments.size(); }
 }

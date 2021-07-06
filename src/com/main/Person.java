@@ -1,5 +1,3 @@
 package com.main;
 
-public abstract class Person {
-
-}
+public abstract class Person { }

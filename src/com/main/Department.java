@@ -1,8 +1,9 @@
 package com.main;
 
+import exceptions.NotEnoughGroupsException;
 import exceptions.NotEnoughStudentsException;
+import exceptions.NotEnoughTeachersException;
 import exceptions.TooManyStudentsException;
-import exceptions.WrongStudentsAmountException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,41 +16,53 @@ public abstract class Department {
     private HashSet<Group> groups = new HashSet<>();
     private HashSet<Teacher> teachers = new HashSet<>();
 
-    public void addGroup(Group group) throws WrongStudentsAmountException {
-        int studentAmount = group.studentsAmount();
-        if (studentAmount < Group.minStudentAmount)
+    public void addGroup(Group group) throws NotEnoughStudentsException {
+        if (group.studentsAmount() < Group.minStudentAmount)
             throw new NotEnoughStudentsException();
-        if (studentAmount > Group.maxStudentAmount)
-            throw new TooManyStudentsException();
         groups.add(group);
     }
 
-    public void addGroups(Collection<Group> groups) throws WrongStudentsAmountException {
+    public void addGroups(Collection<Group> groups) throws NotEnoughStudentsException {
         for (Group group : groups)
             addGroup(group);
     }
 
-    public void addTeacher(Teacher teacher) {
-        teachers.add(teacher);
+    public void removeGroup(Group group) throws NotEnoughGroupsException {
+        if (groups.size() == minGroupsAmount && groups.contains(group))
+            throw new NotEnoughGroupsException();
+        groups.remove(group);
     }
 
-    public void addTeachers(Collection<Teacher> teachers) {
-        this.teachers.addAll(teachers);
+    public void removeGroups(Collection<Group> groups) throws NotEnoughGroupsException {
+        HashSet<Group> backUp = (HashSet<Group>) Set.copyOf(this.groups);
+        this.groups.removeAll(groups);
+        if (this.groups.size() < minGroupsAmount) {
+            this.groups = backUp;
+            throw new NotEnoughGroupsException();
+        }
     }
 
-    public Set<Group> getGroups() {
-        return Set.copyOf(groups);
+    public void addTeacher(Teacher teacher) { teachers.add(teacher); }
+    public void addTeachers(Collection<Teacher> teachers) { this.teachers.addAll(teachers); }
+
+    public void removeTeacher(Teacher teacher) throws NotEnoughTeachersException {
+        if (teachers.size() == minTeachersAmount && teachers.contains(teacher))
+            throw new NotEnoughTeachersException();
+        teachers.remove(teacher);
     }
 
-    public Set<Teacher> getTeachers() {
-        return Set.copyOf(teachers);
+    public void removeTeachers(Collection<Teacher> teachers) throws NotEnoughTeachersException {
+        HashSet<Teacher> backUp = (HashSet<Teacher>) Set.copyOf(this.teachers);
+        this.teachers.removeAll(teachers);
+        if (groups.size() < minGroupsAmount) {
+            this.teachers = backUp;
+            throw new NotEnoughTeachersException();
+        }
     }
 
-    public int groupsAmount() {
-        return groups.size();
-    }
+    public Set<Group> getGroups() { return Set.copyOf(groups); }
+    public Set<Teacher> getTeachers() { return Set.copyOf(teachers); }
 
-    public int teachersAmount() {
-        return teachers.size();
-    }
+    public int groupsAmount() { return groups.size(); }
+    public int teachersAmount() { return teachers.size(); }
 }
