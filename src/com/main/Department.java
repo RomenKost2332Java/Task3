@@ -3,7 +3,6 @@ package com.main;
 import exceptions.NotEnoughGroupsException;
 import exceptions.NotEnoughStudentsException;
 import exceptions.NotEnoughTeachersException;
-import exceptions.TooManyStudentsException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -65,4 +64,19 @@ public abstract class Department {
 
     public int groupsAmount() { return groups.size(); }
     public int teachersAmount() { return teachers.size(); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Department department = (Department) obj;
+
+        return groups.equals(department.groups) && teachers.equals(department.teachers);
+    }
+
+    @Override
+    public int hashCode() {
+        return groups.size() + 31 * teachers.size();
+    }
 }

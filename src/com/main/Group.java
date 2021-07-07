@@ -32,8 +32,9 @@ public abstract class Group {
     public void removeSubjects(Collection<Subject> subjects){ this.subjects.removeAll(subjects); }
 
     public void addStudent(Student student) throws TooManyStudentsException {
-        if (students.size() == maxStudentAmount && !students.contains(student))
+        if (students.size() == maxStudentAmount && !students.contains(student)){
             throw new TooManyStudentsException();
+        }
         students.add(student);
     }
 
@@ -47,8 +48,9 @@ public abstract class Group {
     }
 
     public void removeStudent(Student student) throws NotEnoughStudentsException {
-        if (students.size() == minStudentAmount && students.contains(student))
+        if (students.size() == minStudentAmount && students.contains(student)){
             throw new NotEnoughStudentsException();
+        }
         students.remove(student);
     }
 
@@ -63,4 +65,19 @@ public abstract class Group {
 
     public void setCurator(Curator curator){ this.curator = curator; }
     public int studentsAmount(){ return students.size(); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Group group = (Group) obj;
+
+        return students.equals(group.students) && subjects.equals(group.subjects) && curator.equals(group.curator);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1000*(students.size() + (maxStudentAmount + 1)*subjects.size()) + specializationCode;
+    }
 }

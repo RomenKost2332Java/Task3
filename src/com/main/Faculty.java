@@ -16,21 +16,25 @@ public abstract class Faculty {
     public Set<Department> getDepartments() { return Set.copyOf(departments); }
 
     public void addDepartment(Department department) throws NotEnoughGroupsException, NotEnoughTeachersException {
-        if (Department.minGroupsAmount > department.groupsAmount())
+        if (Department.minGroupsAmount > department.groupsAmount()){
             throw new NotEnoughGroupsException();
-        if (Department.minTeachersAmount > department.teachersAmount())
+        }
+        if (Department.minTeachersAmount > department.teachersAmount()){
             throw new NotEnoughTeachersException();
+        }
         departments.add(department);
     }
 
     public void addDepartments(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
-        for(Department department : departments)
+        for(Department department : departments){
             addDepartment(department);
+        }
     }
 
     public void removeDepartments(Department department) throws NotEnoughDepartmentsException {
-        if (departments.size() == minAmountDepartments && departments.contains(department))
+        if (departments.size() == minAmountDepartments && departments.contains(department)){
             throw new NotEnoughDepartmentsException();
+        }
         departments.remove(department);
     }
 
@@ -44,4 +48,19 @@ public abstract class Faculty {
     }
 
     public int departmentAmount(){ return departments.size(); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Faculty faculty = (Faculty) obj;
+
+        return departments.equals(faculty.departments);
+    }
+
+    @Override
+    public int hashCode() {
+        return departments.size();
+    }
 }
