@@ -13,6 +13,11 @@ public abstract class Faculty {
 
     private HashSet<Department> departments = new HashSet<>();
 
+    Faculty() {}
+    Faculty(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
+        addDepartments(departments);
+    }
+
     public Set<Department> getDepartments() { return Set.copyOf(departments); }
 
     public void addDepartment(Department department) throws NotEnoughGroupsException, NotEnoughTeachersException {

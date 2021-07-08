@@ -19,6 +19,14 @@ public abstract class Group {
         this.specializationCode = specializationCode;
         this.curator = curator;
     }
+    Group(int specializationCode, Curator curator, Collection<Student> students) throws TooManyStudentsException {
+        this(specializationCode, curator);
+        addStudents(students);
+    }
+    Group(int specializationCode, Curator curator, Collection<Student> students, Collection<Subject> subjects) throws TooManyStudentsException {
+        this(specializationCode, curator, students);
+        addSubjects(subjects);
+    }
 
     public Curator getCurator() { return curator; }
     public int getSpecializationCode() { return specializationCode; }

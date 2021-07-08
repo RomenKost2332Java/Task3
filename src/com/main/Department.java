@@ -15,20 +15,30 @@ public abstract class Department {
     private HashSet<Group> groups = new HashSet<>();
     private HashSet<Teacher> teachers = new HashSet<>();
 
+    Department(){}
+    Department(Collection<Group> groups) throws NotEnoughStudentsException { addGroups(groups); }
+    Department(Collection<Group> groups, Collection<Teacher> teachers) throws NotEnoughStudentsException {
+        addGroups(groups);
+        addTeachers(teachers);
+    }
+
     public void addGroup(Group group) throws NotEnoughStudentsException {
-        if (group.studentsAmount() < Group.minStudentAmount)
+        if (group.studentsAmount() < Group.minStudentAmount){
             throw new NotEnoughStudentsException();
+        }
         groups.add(group);
     }
 
     public void addGroups(Collection<Group> groups) throws NotEnoughStudentsException {
-        for (Group group : groups)
+        for (Group group : groups){
             addGroup(group);
+        }
     }
 
     public void removeGroup(Group group) throws NotEnoughGroupsException {
-        if (groups.size() == minGroupsAmount && groups.contains(group))
+        if (groups.size() == minGroupsAmount && groups.contains(group)){
             throw new NotEnoughGroupsException();
+        }
         groups.remove(group);
     }
 
@@ -45,8 +55,9 @@ public abstract class Department {
     public void addTeachers(Collection<Teacher> teachers) { this.teachers.addAll(teachers); }
 
     public void removeTeacher(Teacher teacher) throws NotEnoughTeachersException {
-        if (teachers.size() == minTeachersAmount && teachers.contains(teacher))
+        if (teachers.size() == minTeachersAmount && teachers.contains(teacher)){
             throw new NotEnoughTeachersException();
+        }
         teachers.remove(teacher);
     }
 
