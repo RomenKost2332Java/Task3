@@ -90,4 +90,9 @@ public abstract class Department {
     public int hashCode() {
         return groups.size() + 31 * teachers.size();
     }
+
+    @Override
+    public String toString() {
+        return "Department. " + groups.size() + " groups.";
+    }
 }

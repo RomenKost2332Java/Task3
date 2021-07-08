@@ -42,4 +42,9 @@ public abstract class University {
     public int hashCode() {
         return faculties.size();
     }
+
+    @Override
+    public String toString() {
+        return "University. " + faculties.size() + " faculties.";
+    }
 }

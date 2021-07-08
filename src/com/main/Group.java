@@ -88,4 +88,9 @@ public abstract class Group {
     public int hashCode() {
         return 1000*(students.size() + (maxStudentAmount + 1)*subjects.size()) + specializationCode;
     }
+
+    @Override
+    public String toString() {
+        return "Group " + specializationCode + ". " + students.size() + " students. " + subjects.size() + " subject.";
+    }
 }

@@ -14,4 +14,9 @@ public abstract class Teacher extends Person {
 
     public void removeSubject(Subject subject) { subjects.remove(subject); }
     public void removeSubjects(Collection<Subject> subjects) { this.subjects.removeAll(subjects); }
+
+    @Override
+    public String toString() {
+        return "Teacher. " + subjects.size() + " subjects.";
+    }
 }

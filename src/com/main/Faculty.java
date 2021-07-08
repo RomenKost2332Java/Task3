@@ -68,4 +68,9 @@ public abstract class Faculty {
     public int hashCode() {
         return departments.size();
     }
+
+    @Override
+    public String toString() {
+        return "Faculty. " + departments.size() + " departments.";
+    }
 }
