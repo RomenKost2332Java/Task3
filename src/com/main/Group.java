@@ -35,6 +35,23 @@ public abstract class Group {
 
     public void setCurator(Curator curator){ this.curator = curator; }
 
+    public void setSubjects(Collection<Subject> subjects){
+        this.subjects = new HashSet<>();
+        addSubjects(subjects);
+    }
+
+    public void setStudents(Collection<Student> students) throws TooManyStudentsException {
+        HashSet<Student> backUp = (HashSet<Student>) Set.copyOf(this.students);
+        this.students = new HashSet<>();
+        try {
+            addStudents(students);
+        }
+        catch (TooManyStudentsException e) {
+            this.students = backUp;
+            throw e;
+        }
+    }
+
     public void addSubject(Subject subject) { subjects.add(subject); }
     public void addSubjects(Collection<Subject> subjects) { this.subjects.addAll(subjects); }
 
@@ -74,6 +91,7 @@ public abstract class Group {
     }
 
     public int studentsAmount(){ return students.size(); }
+    public int subjectsAmount(){ return subjects.size(); }
 
     @Override
     public boolean equals(Object obj) {

@@ -13,11 +13,18 @@ public abstract class Teacher extends Person {
 
     public Set<Subject> getSubjects() { return Set.copyOf(subjects); }
 
+    public void setSubjects(Collection<Subject> subjects){
+        this.subjects = new HashSet<>();
+        addSubjects(subjects);
+    }
+
     public void addSubject(Subject subject) { subjects.add(subject); }
     public void addSubjects(Collection<Subject> subjects) { this.subjects.addAll(subjects); }
 
     public void removeSubject(Subject subject) { subjects.remove(subject); }
     public void removeSubjects(Collection<Subject> subjects) { this.subjects.removeAll(subjects); }
+
+    public int subjectsAmount(){ return subjects.size(); }
 
     @Override
     public String toString() {

@@ -10,12 +10,16 @@ ____
 ____
 .. Getters ..
 +getFaculties()
+.. Setters ..
++setFaculties()
 .. Methods for adding ..
 +addFaculty(Faculty faculty)
 +addFaculties(Collection<Faculty> faculties)
 .. Methods for removing ..
 +removeFaculty(Faculty faculty)
 +removeFaculties(Collection<Faculty> faculties)
+.. Methods for getting amount ..
++facultiesAmount()
 }
 
 abstract class Faculty{
@@ -29,12 +33,16 @@ ____
 ____
 .. Getters ..
 +getDepartments()
+.. Setters ..
++setDepartments()
 .. Methods for adding ..
 +addDepartment(Department department)
 +addDepartments(Collection<Department> departments)
 .. Methods for removing ..
 +removeDepartments(Department department)
 +removeDepartments(Collection<Department> departments)
+.. Methods for getting amount ..
++departmentsAmount()
 }
 
 abstract class Department{
@@ -52,6 +60,9 @@ ____
 .. Getters ..
 +getGroups()
 +getTeachers()
+.. Setters ..
++setGroups()
++setTeachers()
 .. Methods for adding ..
 +addGroup(Group group)
 +addGroups(Collection<Group> groups)
@@ -88,6 +99,8 @@ ____
 +getStudents()
 .. Setters..
 +setCurator(Curator curator)
++setSubjects()
++setStudents()
 .. Methods for adding ..
 +addSubject(Subject subject)
 +addSubjects(Collection<Subject> subjects)
@@ -100,6 +113,7 @@ ____
 +removeStudents(Collection<Student> students)
 .. Methods for getting amount ..
 +studentsAmount()
++subjectsAmount()
 }
 
 abstract class Teacher{
@@ -113,12 +127,16 @@ ____
 ____
 .. Getters ..
 +getSubjects()
+.. Setters ..
++setSubjects()
 .. Methods for adding ..
 +addSubject(Subject subject)
 +addSubjects(Collection<Subject> subjects)
 .. Methods for removing ..
 +removeSubject(Subject subject)
 +removeSubjects(Collection<Subject> subjects)
+.. Methods for getting amount ..
++subjectsAmount()
 }
 
 abstract class Student

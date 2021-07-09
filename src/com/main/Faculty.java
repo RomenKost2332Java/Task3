@@ -20,6 +20,17 @@ public abstract class Faculty {
 
     public Set<Department> getDepartments() { return Set.copyOf(departments); }
 
+    public void setDepartments(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
+        HashSet<Department> backUp = (HashSet<Department>) Set.copyOf(this.departments);
+        this.departments = new HashSet<>();
+        try {
+            addDepartments(departments);
+        } catch (NotEnoughGroupsException | NotEnoughTeachersException e) {
+            this.departments = backUp;
+            throw e;
+        }
+    }
+
     public void addDepartment(Department department) throws NotEnoughGroupsException, NotEnoughTeachersException {
         if (Department.MIN_GROUPS_AMOUNT > department.groupsAmount()){
             throw new NotEnoughGroupsException();
