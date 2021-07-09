@@ -9,22 +9,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Faculty {
-    public static final int minAmountDepartments = 1;
+    public static final int MIN_AMOUNT_DEPARTMENTS = 1;
 
     private HashSet<Department> departments = new HashSet<>();
 
-    Faculty() {}
-    Faculty(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
+    public Faculty() {}
+    public Faculty(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
         addDepartments(departments);
     }
 
     public Set<Department> getDepartments() { return Set.copyOf(departments); }
 
     public void addDepartment(Department department) throws NotEnoughGroupsException, NotEnoughTeachersException {
-        if (Department.minGroupsAmount > department.groupsAmount()){
+        if (Department.MIN_GROUPS_AMOUNT > department.groupsAmount()){
             throw new NotEnoughGroupsException();
         }
-        if (Department.minTeachersAmount > department.teachersAmount()){
+        if (Department.MIN_TEACHERS_AMOUNT > department.teachersAmount()){
             throw new NotEnoughTeachersException();
         }
         departments.add(department);
@@ -37,7 +37,7 @@ public abstract class Faculty {
     }
 
     public void removeDepartments(Department department) throws NotEnoughDepartmentsException {
-        if (departments.size() == minAmountDepartments && departments.contains(department)){
+        if (departments.size() == MIN_AMOUNT_DEPARTMENTS && departments.contains(department)){
             throw new NotEnoughDepartmentsException();
         }
         departments.remove(department);
@@ -46,7 +46,7 @@ public abstract class Faculty {
     public void removeDepartments(Collection<Department> departments) throws NotEnoughDepartmentsException {
         HashSet<Department> backUp = (HashSet<Department>) Set.copyOf(this.departments);
         this.departments.removeAll(departments);
-        if (this.departments.size() < minAmountDepartments) {
+        if (this.departments.size() < MIN_AMOUNT_DEPARTMENTS) {
             this.departments = backUp;
             throw new NotEnoughDepartmentsException();
         }

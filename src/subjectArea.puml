@@ -1,0 +1,142 @@
+@startuml
+abstract class University {
+.. Fields ..
+-HashSet<Faculty> faculties
+____
+.. Constructors ..
++University()
++University(Faculty faculty)
++University(Collection<Faculty> faculties)
+____
+.. Getters ..
++getFaculties()
+.. Methods for adding ..
++addFaculty(Faculty faculty)
++addFaculties(Collection<Faculty> faculties)
+.. Methods for removing ..
++removeFaculty(Faculty faculty)
++removeFaculties(Collection<Faculty> faculties)
+}
+
+abstract class Faculty{
+.. Fields ..
++{static} MIN_AMOUNT_DEPARTMENTS: int=1
+-HashSet<Department> departments
+____
+.. Constructors ..
++Faculty()
++Faculty(Collection<Department> departments)
+____
+.. Getters ..
++getDepartments()
+.. Methods for adding ..
++addDepartment(Department department)
++addDepartments(Collection<Department> departments)
+.. Methods for removing ..
++removeDepartments(Department department)
++removeDepartments(Collection<Department> departments)
+}
+
+abstract class Department{
+.. Fields ..
++{static}MIN_GROUPS_AMOUNT: int=1
++{static}MIN_TEACHERS_AMOUNT: int=3
+-HashSet<Group> groups
+-HashSet<Teacher> teachers
+____
+.. Constructors ..
++Department()
++Department(Collection<Group> groups)
++Department(Collection<Group> groups, Collection<Teacher> teachers)
+____
+.. Getters ..
++getGroups()
++getTeachers()
+.. Methods for adding ..
++addGroup(Group group)
++addGroups(Collection<Group> groups)
++addTeacher(Teacher teacher)
++addTeachers(Collection<Teacher> teachers)
+.. Methods for removing ..
++removeGroup(Group group)
++removeGroups(Collection<Group> groups)
++removeTeacher(Teacher teacher)
++removeTeachers(Collection<Teacher> teachers)
+.. Methods for getting amount ..
++int groupsAmount()
++int teachersAmount()
+}
+
+abstract class Group{
+.. Fields ..
++{static}MIN_STUDENT_AMOUNT: int=6
++{static}MAX_STUDENT_AMOUNT: int=30
+-int specializationCode
+-Curator curator
+-HashSet<Subject> subjects
+-HashSet<Student> students
+____
+.. Constructors ..
++Group(int specializationCode, Curator curator)
++Group(int specializationCode, Curator curator, Collection<Student> students)
++Group(int specializationCode, Curator curator, Collection<Student> students, Collection<Subject> subjects)
+____
+.. Getters ..
++getCurator()
++getSpecializationCode()
++getSubjects()
++getStudents()
+.. Setters..
++setCurator(Curator curator)
+.. Methods for adding ..
++addSubject(Subject subject)
++addSubjects(Collection<Subject> subjects)
++addStudent(Student student)
++addStudents(Collection<Student> students)
+.. Methods for removing ..
++removeSubject(Subject subject)
++removeSubjects(Collection<Subject> subjects)
++removeStudent(Student student)
++removeStudents(Collection<Student> students)
+.. Methods for getting amount ..
++studentsAmount()
+}
+
+abstract class Teacher{
+.. Fields ..
+-HashSet<Subject> subjects
+____
+.. Constructors ..
++Teacher()
++Teacher(Subject subject)
++Teacher(Collection<Subject> subjects)
+____
+.. Getters ..
++getSubjects()
+.. Methods for adding ..
++addSubject(Subject subject)
++addSubjects(Collection<Subject> subjects)
+.. Methods for removing ..
++removeSubject(Subject subject)
++removeSubjects(Collection<Subject> subjects)
+}
+
+abstract class Student
+abstract class Subject
+abstract class Person
+abstract class Curator
+
+University *-- Faculty
+Faculty *-- "> Faculty.MIN_AMOUNT_DEPARTMENTS" Department
+Department *--- "> Department.MIN_GROUPS_AMOUNT" Group
+Department *--- "> Department.MIN_TEACHERS_AMOUNT" Teacher
+Group *--- "> Department.MIN_STUDENT_AMOUNT \n< Department.MAX_STUDENT_AMOUNT" Student
+Teacher *-- Subject
+Group *-- Subject
+
+Person <|-- Teacher
+Person <|-- Student
+Student <|-- Curator
+
+Group <-- Curator
+@enduml

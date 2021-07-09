@@ -4,16 +4,21 @@ import exceptions.NotEnoughDepartmentsException;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 public abstract class University {
     private HashSet<Faculty> faculties = new HashSet<>();
 
-    University() {}
-    University(Faculty faculty) throws NotEnoughDepartmentsException { addFaculty(faculty); }
-    University(Collection<Faculty> faculties) throws NotEnoughDepartmentsException { addFaculties(faculties); }
+    public University() {}
+    public University(Faculty faculty) throws NotEnoughDepartmentsException { addFaculty(faculty); }
+    public University(Collection<Faculty> faculties) throws NotEnoughDepartmentsException { addFaculties(faculties); }
+
+    public Set<Faculty> getFaculties() {
+        return Set.copyOf(faculties);
+    }
 
     public void addFaculty(Faculty faculty) throws NotEnoughDepartmentsException {
-        if (Faculty.minAmountDepartments > faculty.departmentAmount()){
+        if (Faculty.MIN_AMOUNT_DEPARTMENTS > faculty.departmentAmount()){
             throw new NotEnoughDepartmentsException();
         }
         faculties.add(faculty);
