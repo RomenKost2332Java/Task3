@@ -1,8 +1,6 @@
 package com.main;
 
-import exceptions.NoCuratorException;
 import exceptions.NotEnoughGroupsException;
-import exceptions.NotEnoughStudentsException;
 import exceptions.NotEnoughTeachersException;
 
 import java.util.HashSet;
@@ -11,12 +9,12 @@ import java.util.Set;
 
 public class Department {
     /**
-     * Min amount groups that may contain department in a faculty.
+     * Min amount groups that may contain a department.
      */
     public static final int MIN_GROUPS_AMOUNT = 1;
 
     /**
-     * Min amount teachers that may contain department in a faculty.
+     * Min amount teachers that may contain a department.
      */
     public static final int MIN_TEACHERS_AMOUNT = 3;
 
@@ -31,41 +29,23 @@ public class Department {
     private Set<Teacher> teachers = new HashSet<>();
 
     /**
-     * An empty constructor.
-     */
-    public Department() {
-
-    }
-
-    /**
-     * This constructor adds groups from the set to the groups container during creating object of this class.
-     *
-     * @param groups - the set of groups to setting to the groups container.
-     * @throws NotEnoughStudentsException if a group that haven't enough students exists in the set.
-     * @throws NoCuratorException         if a group that haven't curator exists in the set.
-     */
-    public Department(Set<Group> groups) throws NotEnoughStudentsException, NoCuratorException {
-        addGroups(groups);
-    }
-
-    /**
      * This constructor adds groups from the groups set to the groups container and teachers from the teachers
      * set to the teachers container during creating object of this class.
      *
-     * @param groups   - a set of groups to setting to the groups container.
-     * @param teachers - a set of teachers to setting to the teachers container.
-     * @throws NotEnoughStudentsException if a group that haven't enough students exists in the set.
-     * @throws NoCuratorException         if a group that haven't curator exists in the set.
+     * @param groups   - the set of groups to setting to the groups container.
+     * @param teachers - the set of teachers to setting to the teachers container.
+     * @throws NotEnoughGroupsException   if the groups container won't have enough groups after setting.
+     * @throws NotEnoughTeachersException if the teachers container won't have enough teachers after setting.
      */
-    public Department(Set<Group> groups, Set<Teacher> teachers) throws NotEnoughStudentsException, NoCuratorException {
-        addGroups(groups);
-        addTeachers(teachers);
+    public Department(Set<Group> groups, Set<Teacher> teachers) throws NotEnoughGroupsException, NotEnoughTeachersException {
+        setGroups(groups);
+        setTeachers(teachers);
     }
 
     /**
      * The getter of the groups container.
      *
-     * @return a copy of the container of groups.
+     * @return the copy of the container of groups.
      */
     public Set<Group> getGroups() {
         return Set.copyOf(groups);
@@ -74,7 +54,7 @@ public class Department {
     /**
      * The getter of the teachers container.
      *
-     * @return a copy of the container of teachers.
+     * @return the copy of the container of teachers.
      */
     public Set<Teacher> getTeachers() {
         return Set.copyOf(teachers);
@@ -83,59 +63,45 @@ public class Department {
     /**
      * The setter of the groups container.
      *
-     * @param groups - a set of groups to adding to the groups container.
-     * @throws NotEnoughStudentsException if a group that haven't enough students exists in the set.
-     * @throws NoCuratorException         if a group that haven't curator exists in the set.
+     * @param groups - the set of groups to setting to the groups container.
+     * @throws NotEnoughGroupsException if the groups container won't have enough groups after setting.
      */
-    public void setGroups(Set<Group> groups) throws NotEnoughStudentsException, NoCuratorException {
-        Set<Group> backUp = Set.copyOf(this.groups);
-        this.groups = new HashSet<>();
-        try {
-            addGroups(groups);
-        } catch (NotEnoughStudentsException | NoCuratorException e) {
-            this.groups = backUp;
-            throw e;
+    public void setGroups(Set<Group> groups) throws NotEnoughGroupsException {
+        if (MIN_GROUPS_AMOUNT > groups.size()) {
+            throw new NotEnoughGroupsException();
         }
+        this.groups = new HashSet<>(groups);
     }
 
     /**
      * The setter of the teachers container.
      *
-     * @param teachers - a set of teachers to adding to the teachers container.
+     * @param teachers - to set of teachers to setting to the teachers container.
+     * @throws NotEnoughTeachersException if the teachers container won't have enough teachers after setting.
      */
-    public void setTeachers(Set<Teacher> teachers) {
-        this.teachers = new HashSet<>();
-        addTeachers(teachers);
+    public void setTeachers(Set<Teacher> teachers) throws NotEnoughTeachersException {
+        if (MIN_TEACHERS_AMOUNT > teachers.size()) {
+            throw new NotEnoughTeachersException();
+        }
+        this.teachers = new HashSet<>(teachers);
     }
 
     /**
      * This method adds the group to the groups container.
      *
-     * @param group - the department to adding to the groups container.
-     * @throws NotEnoughStudentsException if the group haven't enough students.
-     * @throws NoCuratorException         if the group haven't a curator.
+     * @param group - the group to adding to the groups container.
      */
-    public void addGroup(Group group) throws NotEnoughStudentsException, NoCuratorException {
-        if (group.studentsAmount() < Group.MIN_STUDENT_AMOUNT) {
-            throw new NotEnoughStudentsException();
-        }
-        if (group.getCurator() == null) {
-            throw new NoCuratorException();
-        }
+    public void addGroup(Group group) {
         groups.add(group);
     }
 
     /**
-     * This method adds the all departments from the set to the departments container.
+     * This method adds the all groups from the set to the groups container.
      *
      * @param groups - the groups set to adding to the groups container.
-     * @throws NotEnoughStudentsException if a group that haven't enough students exists in the set.
-     * @throws NoCuratorException         if a group that haven't curator exists in the set.
      */
-    public void addGroups(Set<Group> groups) throws NotEnoughStudentsException, NoCuratorException {
-        for (Group group : groups) {
-            addGroup(group);
-        }
+    public void addGroups(Set<Group> groups) {
+        this.groups.addAll(groups);
     }
 
     /**
@@ -158,7 +124,7 @@ public class Department {
      * @throws NotEnoughGroupsException if the groups container won't have enough groups after removing.
      */
     public void removeGroups(Set<Group> groups) throws NotEnoughGroupsException {
-        HashSet<Group> backUp = (HashSet<Group>) Set.copyOf(this.groups);
+        Set<Group> backUp = Set.copyOf(this.groups);
         this.groups.removeAll(groups);
         if (this.groups.size() < MIN_GROUPS_AMOUNT) {
             this.groups = backUp;
