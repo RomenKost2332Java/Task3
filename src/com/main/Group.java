@@ -7,7 +7,7 @@ import exceptions.WrongStudentsAmountException;
 
 import java.util.*;
 
-public abstract class Group {
+public class Group {
     /**
      * Min amount students that may contain group in a department.
      */
@@ -88,10 +88,15 @@ public abstract class Group {
     }
 
     /**
-     *
-     * @return
+     * The getter of the curator variable.
+     * @return curator object.
      */
     public Curator getCurator() { return curator; }
+
+    /**
+     * The getter of the specializationCode variable.
+     * @return specialization code of the group.
+     */
     public int getSpecializationCode() { return specializationCode; }
 
     /**
@@ -99,8 +104,18 @@ public abstract class Group {
      * @return a copy of the container of subjects.
      */
     public Set<Subject> getSubjects() { return Set.copyOf(subjects); }
+
+    /**
+     * The getter of the students container.
+     * @return a copy of the container of subjects.
+     */
     public Set<Student> getStudents() { return Set.copyOf(students); }
 
+    /**
+     * The setter of the curator variable.
+     * @param curator - the curator to setting in variable.
+     * @throws NoCuratorException if curator is null.
+     */
     public void setCurator(Curator curator) throws NoCuratorException {
         if (curator == null){
             throw new NoCuratorException();
@@ -108,11 +123,19 @@ public abstract class Group {
         this.curator = curator;
     }
 
+    /**
+     * The setter of the subjects container.
+     * @param subjects - a collection of subjects to adding to the subjects container.
+     */
     public void setSubjects(Collection<Subject> subjects){
         this.subjects = new HashSet<>();
         addSubjects(subjects);
     }
 
+    /**
+     * The setter of the subjects container.
+     * @param students - a collection of students to adding to the students container.
+     */
     public void setStudents(Collection<Student> students) throws WrongStudentsAmountException {
         HashSet<Student> backUp = (HashSet<Student>) Set.copyOf(this.students);
         this.students = new HashSet<>();
@@ -128,12 +151,35 @@ public abstract class Group {
         }
     }
 
+    /**
+     * This method adds the subject to the subjects container.
+     * @param subject - the subject to adding to the subjects collection.
+     */
     public void addSubject(Subject subject) { subjects.add(subject); }
+
+    /**
+     * This method adds the all subjects from the collection to the subjects container.
+     * @param subjects - the subjects collection to adding to the subjects container.
+     */
     public void addSubjects(Collection<Subject> subjects) { this.subjects.addAll(subjects); }
 
+    /**
+     * This method removes the subject from the subjects container.
+     * @param subject - the subject to removing from the subjects container.
+     */
     public void removeSubject(Subject subject){ subjects.remove(subject); }
+
+    /**
+     * This method removes from the subjects container the all subjects from the subjects collection.
+     * @param subjects - the collection of subjects to removing from the subjects container.
+     */
     public void removeSubjects(Collection<Subject> subjects){ this.subjects.removeAll(subjects); }
 
+    /**
+     * This method adds the student to the student container.
+     * @param student - the student to adding to the students collection.
+     * @throws TooManyStudentsException if the group have too many students.
+     */
     public void addStudent(Student student) throws TooManyStudentsException {
         if (students.size() == MAX_STUDENT_AMOUNT && !students.contains(student)){
             throw new TooManyStudentsException();
@@ -141,6 +187,11 @@ public abstract class Group {
         students.add(student);
     }
 
+    /**
+     * This method adds the all students from the collection to the students container.
+     * @param students - the students collection to adding to the students container.
+     * @throws TooManyStudentsException if the group will have to many students after adding.
+     */
     public void addStudents(Collection<Student> students) throws TooManyStudentsException {
         HashSet<Student> backUp = (HashSet<Student>) Set.copyOf(this.students);
         this.students.addAll(students);
@@ -150,6 +201,11 @@ public abstract class Group {
         }
     }
 
+    /**
+     * This method removes the student from the students container.
+     * @param student - the student to removing from the students container.
+     * @throws NotEnoughStudentsException if the students container won't have enough students after removing.
+     */
     public void removeStudent(Student student) throws NotEnoughStudentsException {
         if (students.size() == MIN_STUDENT_AMOUNT && students.contains(student)){
             throw new NotEnoughStudentsException();
@@ -157,6 +213,11 @@ public abstract class Group {
         students.remove(student);
     }
 
+    /**
+     * This method removes from the students container the all students from the students collection.
+     * @param students - the collection of students to removing from the students container.
+     * @throws NotEnoughStudentsException if the students container won't have enough students after removing.
+     */
     public void removeStudents(Collection<Student> students) throws NotEnoughStudentsException {
         HashSet<Student> backUp = (HashSet<Student>) Set.copyOf(this.students);
         this.students.addAll(students);
@@ -166,29 +227,42 @@ public abstract class Group {
         }
     }
 
+    /**
+     * This method finds amount of students in the students container.
+     * @return a size of the students container.
+     */
     public int studentsAmount(){ return students.size(); }
+
+    /**
+     * This method finds amount of subjects in the subjects container.
+     * @return a size of the subjects container.
+     */
     public int subjectsAmount(){ return subjects.size(); }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Group group = (Group) obj;
-
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
         return specializationCode == group.specializationCode &&
-                students.equals(group.students) &&
-                subjects.equals(group.subjects) &&
-                curator.equals(group.curator);
+                Objects.equals(curator, group.curator) &&
+                Objects.equals(subjects, group.subjects) &&
+                Objects.equals(students, group.students);
     }
 
     @Override
     public int hashCode() {
-        return 1000*(students.size() + (MAX_STUDENT_AMOUNT + 1)*subjects.size()) + specializationCode;
+        return Objects.hash(specializationCode, curator, subjects, students);
     }
 
     @Override
     public String toString() {
-        return "Group " + specializationCode + ". " + students.size() + " students. " + subjects.size() + " subject.";
+        return "Group{" +
+                "specializationCode=" + specializationCode +
+                ", curator=" + curator +
+                ", subjects=" + subjects +
+                ", students=" + students +
+                '}';
     }
+
 }

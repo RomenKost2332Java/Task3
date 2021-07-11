@@ -6,13 +6,14 @@ import exceptions.NotEnoughTeachersException;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * The class to containing and processing an information about a faculty (Contains and processes departments).
  * @author Kostenko Roman
  */
-public abstract class Faculty {
+public class Faculty {
     /**
      * Min amount departments that may contain faculty in an university.
      */
@@ -122,29 +123,23 @@ public abstract class Faculty {
      */
     public int departmentAmount(){ return departments.size(); }
 
-    /**
-     * Two objects of the class Faculty are equals if their departments containers are equals.
-     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Faculty faculty = (Faculty) obj;
-
-        return departments.equals(faculty.departments);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Faculty faculty = (Faculty) o;
+        return Objects.equals(departments, faculty.departments);
     }
 
-    /**
-     * The Faculty object hash code is the size of the departments container.
-     */
     @Override
     public int hashCode() {
-        return departments.size();
+        return Objects.hash(departments);
     }
 
     @Override
     public String toString() {
-        return "Faculty. " + departments.size() + " departments.";
+        return "Faculty{" +
+                "departments=" + departments +
+                '}';
     }
 }

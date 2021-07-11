@@ -2,13 +2,14 @@ package com.main;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * The class to containing and processing an information about a teacher (Contains and processes subjects).
  * @author Kostenko Roman
  */
-public abstract class Teacher extends Person {
+public class Teacher extends Person {
     /**
      * The subjects container.
      */
@@ -78,7 +79,22 @@ public abstract class Teacher extends Person {
     public int subjectsAmount(){ return subjects.size(); }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+        return Objects.equals(subjects, teacher.subjects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(subjects);
+    }
+
+    @Override
     public String toString() {
-        return "Teacher. " + subjects.size() + " subjects.";
+        return "Teacher{" +
+                "subjects=" + subjects +
+                '}';
     }
 }

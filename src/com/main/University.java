@@ -4,13 +4,14 @@ import exceptions.NotEnoughDepartmentsException;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * The class to containing and processing an information about an university (Contain and process faculties).
  * @author Kostenko Roman
  */
-public abstract class University {
+public class University {
     /**
      * The faculties container.
      */
@@ -105,29 +106,23 @@ public abstract class University {
      */
     public int facultiesAmount(){ return faculties.size(); }
 
-    /**
-     * Two objects of the class University are equals if their faculties containers are equals.
-     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        University university = (University) obj;
-
-        return faculties.equals(university.faculties);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        University that = (University) o;
+        return Objects.equals(faculties, that.faculties);
     }
 
-    /**
-     * The University object hash code is the size of the faculties container.
-     */
     @Override
     public int hashCode() {
-        return faculties.size();
+        return Objects.hash(faculties);
     }
 
     @Override
     public String toString() {
-        return "University. " + faculties.size() + " faculties.";
+        return "University{" +
+                "faculties=" + faculties +
+                '}';
     }
 }
