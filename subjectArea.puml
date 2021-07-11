@@ -1,5 +1,5 @@
 @startuml
-abstract class University {
+class University {
 .. Fields ..
 -HashSet<Faculty> faculties
 ____
@@ -22,13 +22,12 @@ ____
 +facultiesAmount()
 }
 
-abstract class Faculty{
+class Faculty{
 .. Fields ..
 +{static} MIN_AMOUNT_DEPARTMENTS: int=1
 -HashSet<Department> departments
 ____
 .. Constructors ..
-+Faculty()
 +Faculty(Collection<Department> departments)
 ____
 .. Getters ..
@@ -45,7 +44,7 @@ ____
 +departmentsAmount()
 }
 
-abstract class Department{
+class Department{
 .. Fields ..
 +{static}MIN_GROUPS_AMOUNT: int=1
 +{static}MIN_TEACHERS_AMOUNT: int=3
@@ -53,8 +52,6 @@ abstract class Department{
 -HashSet<Teacher> teachers
 ____
 .. Constructors ..
-+Department()
-+Department(Collection<Group> groups)
 +Department(Collection<Group> groups, Collection<Teacher> teachers)
 ____
 .. Getters ..
@@ -78,7 +75,7 @@ ____
 +int teachersAmount()
 }
 
-abstract class Group{
+class Group{
 .. Fields ..
 +{static}MIN_STUDENT_AMOUNT: int=6
 +{static}MAX_STUDENT_AMOUNT: int=30
@@ -88,8 +85,6 @@ abstract class Group{
 -HashSet<Student> students
 ____
 .. Constructors ..
-+Group(int specializationCode, Curator curator)
-+Group(int specializationCode, Curator curator, Collection<Student> students)
 +Group(int specializationCode, Curator curator, Collection<Student> students, Collection<Subject> subjects)
 ____
 .. Getters ..
@@ -116,7 +111,7 @@ ____
 +subjectsAmount()
 }
 
-abstract class Teacher{
+class Teacher{
 .. Fields ..
 -HashSet<Subject> subjects
 ____
@@ -139,10 +134,10 @@ ____
 +subjectsAmount()
 }
 
-abstract class Student
-abstract class Subject
+class Student
+class Subject
 abstract class Person
-abstract class Curator
+class Curator
 
 University *-- Faculty
 Faculty *-- "> Faculty.MIN_AMOUNT_DEPARTMENTS" Department
