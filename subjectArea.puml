@@ -2,24 +2,35 @@
 class University {
 .. Fields ..
 -HashSet<Faculty> faculties
+-HashSet<Subject> subjects
 ____
 .. Constructors ..
 +University()
 +University(Faculty faculty)
++University(Subject subject)
 +University(Collection<Faculty> faculties)
++University(Collection<Subject> subjects)
++University(Collection<Faculty> faculties, Collection<Subject> subjects)
 ____
 .. Getters ..
 +getFaculties()
++getSubjects()
 .. Setters ..
 +setFaculties()
++setSubjects()
 .. Methods for adding ..
 +addFaculty(Faculty faculty)
++addSubject(Subject subject)
 +addFaculties(Collection<Faculty> faculties)
++addSubjects(Collection<Subject> subject)
 .. Methods for removing ..
 +removeFaculty(Faculty faculty)
++removeSubject(Subject subject)
 +removeFaculties(Collection<Faculty> faculties)
++removeSubjects(Collection<Subject> subject)
 .. Methods for getting amount ..
 +facultiesAmount()
++subjectAmount()
 }
 
 class Faculty{
