@@ -4,7 +4,6 @@ import exceptions.NotEnoughDepartmentsException;
 import exceptions.NotEnoughGroupsException;
 import exceptions.NotEnoughTeachersException;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -22,21 +21,23 @@ public class Faculty {
     /**
      * The departments container.
      */
-    private HashSet<Department> departments = new HashSet<>();
+    private Set<Department> departments = new HashSet<>();
 
     /**
      * An empty constructor.
      */
-    public Faculty() {}
+    public Faculty() {
+
+    }
 
     /**
-     * This constructor sets departments from the collection to the departments container during creating object of this
+     * This constructor sets departments from the set to the departments container during creating object of this
      * class.
-     * @param departments - a collection of departments to setting to the departments container.
-     * @throws NotEnoughTeachersException if a department that haven't enough teachers exists in the collection.
-     * @throws NotEnoughGroupsException if a department that haven't enough groups exists in the collection.
+     * @param departments - a set of departments to setting to the departments container.
+     * @throws NotEnoughTeachersException if a department that haven't enough teachers exists in the set.
+     * @throws NotEnoughGroupsException if a department that haven't enough groups exists in the set.
      */
-    public Faculty(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
+    public Faculty(Set<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
         addDepartments(departments);
     }
 
@@ -44,16 +45,18 @@ public class Faculty {
      * The getter of the departments container.
      * @return a copy of the container of departments.
      */
-    public Set<Department> getDepartments() { return Set.copyOf(departments); }
+    public Set<Department> getDepartments() {
+        return Set.copyOf(departments);
+    }
 
     /**
      * The setter of the departments container.
-     * @param departments - a collection of departments to adding to the departments container.
-     * @throws NotEnoughTeachersException if a department that haven't enough teachers exists in the collection.
-     * @throws NotEnoughGroupsException if a department that haven't enough groups exists in the collection.
+     * @param departments - a set of departments to adding to the departments container.
+     * @throws NotEnoughTeachersException if a department that haven't enough teachers exists in the set.
+     * @throws NotEnoughGroupsException if a department that haven't enough groups exists in the set.
      */
-    public void setDepartments(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
-        HashSet<Department> backUp = (HashSet<Department>) Set.copyOf(this.departments);
+    public void setDepartments(Set<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
+        Set<Department> backUp = Set.copyOf(this.departments);
         this.departments = new HashSet<>();
         try {
             addDepartments(departments);
@@ -65,7 +68,7 @@ public class Faculty {
 
     /**
      * This method adds the department to the faculties container.
-     * @param department - the department to adding to the departments collection.
+     * @param department - the department to adding to the departments container.
      * @throws NotEnoughGroupsException if the department haven't enough groups.
      * @throws NotEnoughTeachersException if the department haven't enough teachers.
      */
@@ -80,12 +83,12 @@ public class Faculty {
     }
 
     /**
-     * This method adds the all departments from the collection to the departments container.
-     * @param departments - the departments collection to adding to the departments container.
-     * @throws NotEnoughGroupsException if a department that haven't enough groups exists in the collection.
-     * @throws NotEnoughTeachersException if a department that haven't enough teachers exists in the collection.
+     * This method adds the all departments from the set to the departments container.
+     * @param departments - the departments set to adding to the departments container.
+     * @throws NotEnoughGroupsException if a department that haven't enough groups exists in the set.
+     * @throws NotEnoughTeachersException if a department that haven't enough teachers exists in the set.
      */
-    public void addDepartments(Collection<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
+    public void addDepartments(Set<Department> departments) throws NotEnoughTeachersException, NotEnoughGroupsException {
         for(Department department : departments){
             addDepartment(department);
         }
@@ -104,12 +107,12 @@ public class Faculty {
     }
 
     /**
-     * This method removes from the departments container the all departments from the departments collection.
-     * @param departments - the collection of departments to removing from the departments container.
+     * This method removes from the departments container the all departments from the departments set.
+     * @param departments - the set of departments to removing from the departments container.
      * @throws NotEnoughDepartmentsException if the departments container won't have enough departments after removing.
      */
-    public void removeDepartments(Collection<Department> departments) throws NotEnoughDepartmentsException {
-        HashSet<Department> backUp = (HashSet<Department>) Set.copyOf(this.departments);
+    public void removeDepartments(Set<Department> departments) throws NotEnoughDepartmentsException {
+        Set<Department> backUp = Set.copyOf(this.departments);
         this.departments.removeAll(departments);
         if (this.departments.size() < MIN_AMOUNT_DEPARTMENTS) {
             this.departments = backUp;

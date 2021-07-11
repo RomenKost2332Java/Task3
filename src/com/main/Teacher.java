@@ -1,6 +1,5 @@
 package com.main;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -13,7 +12,7 @@ public class Teacher extends Person {
     /**
      * The subjects container.
      */
-    private HashSet<Subject> subjects = new HashSet<>();
+    private Set<Subject> subjects = new HashSet<>();
 
     /**
      * An empty constructor.
@@ -27,11 +26,11 @@ public class Teacher extends Person {
     public Teacher(Subject subject){ addSubject(subject);}
 
     /**
-     * This constructor adds subjects from the collection to the subjects container during creating object of this
+     * This constructor adds subjects from the set to the subjects container during creating object of this
      * class.
-     * @param subjects - a collection of subjects to adding to the subjects container.
+     * @param subjects - a set of subjects to adding to the subjects container.
      */
-    public Teacher(Collection<Subject> subjects) {addSubjects(subjects);}
+    public Teacher(Set<Subject> subjects) {addSubjects(subjects);}
 
     /**
      * The getter of the subjects container.
@@ -41,36 +40,44 @@ public class Teacher extends Person {
 
     /**
      * The setter of the subjects container.
-     * @param subjects - a collection of subjects to setting to the subjects container.
+     * @param subjects - a set of subjects to setting to the subjects container.
      */
-    public void setSubjects(Collection<Subject> subjects){
+    public void setSubjects(Set<Subject> subjects){
         this.subjects = new HashSet<>();
         addSubjects(subjects);
     }
 
     /**
      * This method adds the subject to the subjects container.
-     * @param subject - the subject to adding to the subjects collection.
+     * @param subject - the subject to adding to the subjects container.
      */
-    public void addSubject(Subject subject) { subjects.add(subject); }
+    public void addSubject(Subject subject) {
+        subjects.add(subject);
+    }
 
     /**
-     * This method adds the all subjects from the collection to the subjects container.
-     * @param subjects - the subjects collection to adding to the subjects container.
+     * This method adds the all subjects from the set to the subjects container.
+     * @param subjects - the subjects set to adding to the subjects container.
      */
-    public void addSubjects(Collection<Subject> subjects) { this.subjects.addAll(subjects); }
+    public void addSubjects(Set<Subject> subjects) {
+        this.subjects.addAll(subjects);
+    }
 
     /**
      * This method removes the subject from the subjects container.
      * @param subject - the subject to removing from the subjects container.
      */
-    public void removeSubject(Subject subject) { subjects.remove(subject); }
+    public void removeSubject(Subject subject) {
+        subjects.remove(subject);
+    }
 
     /**
-     * This method removes from the subjects container the all subjects from the subjects collection.
-     * @param subjects - the collection of subjects to removing from the subjects container.
+     * This method removes from the subjects container the all subjects from the subjects set.
+     * @param subjects - the set of subjects to removing from the subjects container.
      */
-    public void removeSubjects(Collection<Subject> subjects) { this.subjects.removeAll(subjects); }
+    public void removeSubjects(Set<Subject> subjects) {
+        this.subjects.removeAll(subjects);
+    }
 
     /**
      * This method finds amount of subjects in the subjects container.

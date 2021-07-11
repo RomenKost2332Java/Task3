@@ -2,7 +2,6 @@ package com.main;
 
 import exceptions.NotEnoughDepartmentsException;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,41 +14,49 @@ public class University {
     /**
      * The faculties container.
      */
-    private HashSet<Faculty> faculties = new HashSet<>();
+    private Set<Faculty> faculties = new HashSet<>();
 
     /**
      * An empty constructor.
      */
-    public University() {}
+    public University() {
+
+    }
 
     /**
      * This constructor adds faculty to the faculties container during creating object of this class.
      * @param faculty - a faculty to adding to the faculties container.
      * @throws NotEnoughDepartmentsException if the faculty haven't enough departments.
      */
-    public University(Faculty faculty) throws NotEnoughDepartmentsException { addFaculty(faculty); }
+    public University(Faculty faculty) throws NotEnoughDepartmentsException {
+        addFaculty(faculty);
+    }
 
     /**
-     * This constructor adds faculties from the collection to the faculties container during creating object of this
+     * This constructor adds faculties from the set to the faculties container during creating object of this
      * class.
-     * @param faculties - a collection of faculties to setting to the faculties container.
-     * @throws NotEnoughDepartmentsException if a faculty that haven't enough departments exists in the collection.
+     * @param faculties - a set of faculties to setting to the faculties container.
+     * @throws NotEnoughDepartmentsException if a faculty that haven't enough departments exists in the set.
      */
-    public University(Collection<Faculty> faculties) throws NotEnoughDepartmentsException { addFaculties(faculties); }
+    public University(Set<Faculty> faculties) throws NotEnoughDepartmentsException {
+        addFaculties(faculties);
+    }
 
     /**
      * The getter of the faculties container.
      * @return a copy of the container of faculties.
      */
-    public Set<Faculty> getFaculties() { return Set.copyOf(faculties); }
+    public Set<Faculty> getFaculties() {
+        return Set.copyOf(faculties);
+    }
 
     /**
      * The setter of the faculties container.
-     * @param faculties - a collection of faculties to setting to the faculties container.
-     * @throws NotEnoughDepartmentsException if a faculty that haven't enough departments exists in the collection.
+     * @param faculties - a set of faculties to setting to the faculties container.
+     * @throws NotEnoughDepartmentsException if a faculty that haven't enough departments exists in the set.
      */
-    public void setFaculties(Collection<Faculty> faculties) throws NotEnoughDepartmentsException {
-        HashSet<Faculty> backUp = (HashSet<Faculty>) Set.copyOf(this.faculties);
+    public void setFaculties(Set<Faculty> faculties) throws NotEnoughDepartmentsException {
+        Set<Faculty> backUp = Set.copyOf(this.faculties);
         this.faculties = new HashSet<>();
         try {
             addFaculties(faculties);
@@ -61,7 +68,7 @@ public class University {
 
     /**
      * This method adds the faculty to the faculties container.
-     * @param faculty - the faculty to adding to the faculties collection.
+     * @param faculty - the faculty to adding to the faculties container.
      * @throws NotEnoughDepartmentsException if the faculty haven't enough departments.
      */
     public void addFaculty(Faculty faculty) throws NotEnoughDepartmentsException {
@@ -72,12 +79,12 @@ public class University {
     }
 
     /**
-     * This method adds the all faculties from the collection to the faculties container.
-     * @param faculties - the faculties collection to adding to the faculties container.
-     * @throws NotEnoughDepartmentsException if a faculty that haven't enough departments exists in the collection.
+     * This method adds the all faculties from the set to the faculties container.
+     * @param faculties - the faculties set to adding to the faculties container.
+     * @throws NotEnoughDepartmentsException if a faculty that haven't enough departments exists in the set.
      */
-    public void addFaculties(Collection<Faculty> faculties) throws NotEnoughDepartmentsException {
-        HashSet<Faculty> backUp = this.faculties;
+    public void addFaculties(Set<Faculty> faculties) throws NotEnoughDepartmentsException {
+        Set<Faculty> backUp = this.faculties;
         try {
             for (Faculty faculty : faculties) {
                 addFaculty(faculty);
@@ -92,19 +99,25 @@ public class University {
      * This method removes the faculty from the faculties container.
      * @param faculty - the faculty to removing from the faculties container.
      */
-    public void removeFaculty(Faculty faculty){ faculties.remove(faculty); }
+    public void removeFaculty(Faculty faculty){
+        faculties.remove(faculty);
+    }
 
     /**
-     * This method removes from the faculties container the all faculties from the faculties collection.
-     * @param faculties - the collection of faculties to removing from the faculties container.
+     * This method removes from the faculties container the all faculties from the faculties set.
+     * @param faculties - the set of faculties to removing from the faculties container.
      */
-    public void removeFaculties(Collection<Faculty> faculties) {this.faculties.removeAll(faculties);}
+    public void removeFaculties(Set<Faculty> faculties) {
+        this.faculties.removeAll(faculties);
+    }
 
     /**
      * This method finds amount of faculties in the faculties container.
      * @return a size of the faculties container.
      */
-    public int facultiesAmount(){ return faculties.size(); }
+    public int facultiesAmount(){
+        return faculties.size();
+    }
 
     @Override
     public boolean equals(Object o) {

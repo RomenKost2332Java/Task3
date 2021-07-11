@@ -31,12 +31,12 @@ public class Group {
     /**
      * The subjects container.
      */
-    private HashSet<Subject> subjects = new HashSet<>();
+    private Set<Subject> subjects = new HashSet<>();
 
     /**
      * The students container.
      */
-    private HashSet<Student> students = new HashSet<>();
+    private Set<Student> students = new HashSet<>();
 
     /**
      * This constructor sets the specialization code of this group.
@@ -58,31 +58,31 @@ public class Group {
     }
 
     /**
-     * This constructor sets the specialization code and curator of this group, sets students from the students
-     * collection to the students container during creating object of this class.
+     * This constructor sets the specialization code and curator of this group, sets students from the students set to
+     * the students container during creating object of this class.
      * @param specializationCode - the specialization code of the group.
      * @param curator - the curator of this group.
-     * @param students - a collection of students to setting to the students container.
-     * @throws WrongStudentsAmountException if a department that have wrong students amount exists in the collection.
+     * @param students - a set of students to setting to the students container.
+     * @throws WrongStudentsAmountException if a department that have wrong students amount exists in the set.
      * @throws NoCuratorException - the curator of this group can't be null.
      */
-    public Group(int specializationCode, Curator curator, Collection<Student> students) throws WrongStudentsAmountException, NoCuratorException {
+    public Group(int specializationCode, Curator curator, Set<Student> students) throws WrongStudentsAmountException, NoCuratorException {
         this(specializationCode, curator);
         setStudents(students);
     }
 
     /**
-     * This constructor sets the specialization code and curator of this group, sets students from the students
-     * collection to the students container and sets subjects from the subjects collection to the subjects container
-     * during creating object of this class.
+     * This constructor sets the specialization code and curator of this group, sets students from the students set to
+     * the students container and sets subjects from the subjects set to the subjects container during creating object
+     * of this class.
      * @param specializationCode - the specialization code of the group.
      * @param curator - the curator of this group.
-     * @param students - a collection of students to setting to the students container.
-     * @param subjects - a collection of students to setting to the students container.
-     * @throws WrongStudentsAmountException if a department that have wrong students amount exists in the collection.
+     * @param students - a set of students to setting to the students container.
+     * @param subjects - a set of students to setting to the students container.
+     * @throws WrongStudentsAmountException if a department that have wrong students amount exists in the set.
      * @throws NoCuratorException - the curator of this group can't be null.
      */
-    public Group(int specializationCode, Curator curator, Collection<Student> students, Collection<Subject> subjects) throws WrongStudentsAmountException, NoCuratorException {
+    public Group(int specializationCode, Curator curator, Set<Student> students, Set<Subject> subjects) throws WrongStudentsAmountException, NoCuratorException {
         this(specializationCode, curator, students);
         addSubjects(subjects);
     }
@@ -91,25 +91,33 @@ public class Group {
      * The getter of the curator variable.
      * @return curator object.
      */
-    public Curator getCurator() { return curator; }
+    public Curator getCurator() {
+        return curator;
+    }
 
     /**
      * The getter of the specializationCode variable.
      * @return specialization code of the group.
      */
-    public int getSpecializationCode() { return specializationCode; }
+    public int getSpecializationCode() {
+        return specializationCode;
+    }
 
     /**
      * The getter of the subjects container.
      * @return a copy of the container of subjects.
      */
-    public Set<Subject> getSubjects() { return Set.copyOf(subjects); }
+    public Set<Subject> getSubjects() {
+        return Set.copyOf(subjects);
+    }
 
     /**
      * The getter of the students container.
      * @return a copy of the container of subjects.
      */
-    public Set<Student> getStudents() { return Set.copyOf(students); }
+    public Set<Student> getStudents() {
+        return Set.copyOf(students);
+    }
 
     /**
      * The setter of the curator variable.
@@ -125,19 +133,19 @@ public class Group {
 
     /**
      * The setter of the subjects container.
-     * @param subjects - a collection of subjects to adding to the subjects container.
+     * @param subjects - a set of subjects to adding to the subjects container.
      */
-    public void setSubjects(Collection<Subject> subjects){
+    public void setSubjects(Set<Subject> subjects){
         this.subjects = new HashSet<>();
         addSubjects(subjects);
     }
 
     /**
      * The setter of the subjects container.
-     * @param students - a collection of students to adding to the students container.
+     * @param students - a set of students to adding to the students container.
      */
-    public void setStudents(Collection<Student> students) throws WrongStudentsAmountException {
-        HashSet<Student> backUp = (HashSet<Student>) Set.copyOf(this.students);
+    public void setStudents(Set<Student> students) throws WrongStudentsAmountException {
+        Set<Student> backUp = Set.copyOf(this.students);
         this.students = new HashSet<>();
         try {
             addStudents(students);
@@ -153,31 +161,39 @@ public class Group {
 
     /**
      * This method adds the subject to the subjects container.
-     * @param subject - the subject to adding to the subjects collection.
+     * @param subject - the subject to adding to the subjects container.
      */
-    public void addSubject(Subject subject) { subjects.add(subject); }
+    public void addSubject(Subject subject) {
+        subjects.add(subject);
+    }
 
     /**
      * This method adds the all subjects from the collection to the subjects container.
-     * @param subjects - the subjects collection to adding to the subjects container.
+     * @param subjects - the subjects set to adding to the subjects container.
      */
-    public void addSubjects(Collection<Subject> subjects) { this.subjects.addAll(subjects); }
+    public void addSubjects(Set<Subject> subjects) {
+        this.subjects.addAll(subjects);
+    }
 
     /**
      * This method removes the subject from the subjects container.
      * @param subject - the subject to removing from the subjects container.
      */
-    public void removeSubject(Subject subject){ subjects.remove(subject); }
+    public void removeSubject(Subject subject){
+        subjects.remove(subject);
+    }
 
     /**
-     * This method removes from the subjects container the all subjects from the subjects collection.
-     * @param subjects - the collection of subjects to removing from the subjects container.
+     * This method removes from the subjects container the all subjects from the subjects set.
+     * @param subjects - the set of subjects to removing from the subjects container.
      */
-    public void removeSubjects(Collection<Subject> subjects){ this.subjects.removeAll(subjects); }
+    public void removeSubjects(Set<Subject> subjects){
+        this.subjects.removeAll(subjects);
+    }
 
     /**
      * This method adds the student to the student container.
-     * @param student - the student to adding to the students collection.
+     * @param student - the student to adding to the students container.
      * @throws TooManyStudentsException if the group have too many students.
      */
     public void addStudent(Student student) throws TooManyStudentsException {
@@ -188,8 +204,8 @@ public class Group {
     }
 
     /**
-     * This method adds the all students from the collection to the students container.
-     * @param students - the students collection to adding to the students container.
+     * This method adds the all students from the set to the students container.
+     * @param students - the students set to adding to the students container.
      * @throws TooManyStudentsException if the group will have to many students after adding.
      */
     public void addStudents(Collection<Student> students) throws TooManyStudentsException {
@@ -214,12 +230,12 @@ public class Group {
     }
 
     /**
-     * This method removes from the students container the all students from the students collection.
-     * @param students - the collection of students to removing from the students container.
+     * This method removes from the students container the all students from the students set.
+     * @param students - the set of students to removing from the students container.
      * @throws NotEnoughStudentsException if the students container won't have enough students after removing.
      */
-    public void removeStudents(Collection<Student> students) throws NotEnoughStudentsException {
-        HashSet<Student> backUp = (HashSet<Student>) Set.copyOf(this.students);
+    public void removeStudents(Set<Student> students) throws NotEnoughStudentsException {
+        Set<Student> backUp = Set.copyOf(this.students);
         this.students.addAll(students);
         if (this.students.size() < MIN_STUDENT_AMOUNT) {
             this.students = backUp;
@@ -231,13 +247,17 @@ public class Group {
      * This method finds amount of students in the students container.
      * @return a size of the students container.
      */
-    public int studentsAmount(){ return students.size(); }
+    public int studentsAmount(){
+        return students.size();
+    }
 
     /**
      * This method finds amount of subjects in the subjects container.
      * @return a size of the subjects container.
      */
-    public int subjectsAmount(){ return subjects.size(); }
+    public int subjectsAmount(){
+        return subjects.size();
+    }
 
     @Override
     public boolean equals(Object o) {
